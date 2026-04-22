@@ -1,0 +1,104 @@
+HTML
+<!DOCTYPE html>
+<html>
+<head>
+<title>YDGL Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  font-family:Arial;
+  background:#0f2027;
+  color:white;
+  margin:0;
+}
+
+.container{
+  padding:20px;
+}
+
+.card{
+  background:white;
+  color:black;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+}
+
+button{
+  background:#28a745;
+  color:white;
+  border:none;
+  padding:10px;
+  width:100%;
+  border-radius:8px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>👤 User Dashboard</h2>
+
+<div class="card">
+  <input type="text" id="name" placeholder="Your Name">
+  <button onclick="saveUser()">Login</button>
+</div>
+
+<div class="card">
+  <h3>📦 Make Order</h3>
+  <button onclick="order('Data')">Buy Data</button>
+  <button onclick="order('POS')">POS Service</button>
+  <button onclick="order('Film')">Download Film</button>
+</div>
+
+<div class="card">
+  <h3>📋 Your Orders</h3>
+  <ul id="orders"></ul>
+</div>
+
+</div>
+
+<script>
+function saveUser(){
+  let name = document.getElementById("name").value;
+  localStorage.setItem("user", name);
+  alert("Welcome " + name);
+}
+
+function order(type){
+  let user = localStorage.getItem("user") || "Guest";
+  let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+  orders.push(user + " ordered " + type);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  loadOrders();
+}
+
+function loadOrders(){
+  let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  let list = document.getElementById("orders");
+  list.innerHTML = "";
+
+  orders.forEach(o=>{
+    let li = document.createElement("li");
+    li.innerText = o;
+    list.appendChild(li);
+  });
+}
+
+loadOrders();
+</script>
+
+</body>
+</html>
