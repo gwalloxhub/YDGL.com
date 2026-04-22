@@ -1,11 +1,105 @@
-<a class="btn whatsapp" href="https://wa.me/2347086506334?text=Hello%20YDGL%20I%20want%20to%20buy%20data">
-Buy Data
-</a>
+HTML
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YDGL SMART SERVICES</title>
 
-<a class="btn whatsapp" href="https://wa.me/2347086506334?text=I%20need%20POS%20service">
-POS Service
-</a>
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background: linear-gradient(135deg,#0a1f44,#0f9d58);
+    color:white;
+    text-align:center;
+}
 
-<a class="btn whatsapp" href="https://wa.me/2347086506334?text=I%20want%20films">
-Download Films
-</a>
+.container{
+    padding:20px;
+}
+
+.logo{
+    width:120px;
+}
+
+.box{
+    background:white;
+    color:black;
+    margin:10px;
+    padding:15px;
+    border-radius:10px;
+}
+
+button{
+    background:#0f9d58;
+    color:white;
+    border:none;
+    padding:12px;
+    width:80%;
+    margin:10px;
+    border-radius:8px;
+    font-size:16px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="logo.jpg" class="logo">
+
+<h1>YDGL SMART SERVICES</h1>
+<p>Make Payment • Buy Data • Download Films</p>
+
+<!-- DATA -->
+<div class="box">
+<h3>📶 Buy Data</h3>
+<p>MTN • Airtel • Glo • 9mobile</p>
+
+<button onclick="orderData()">Buy Now</button>
+</div>
+
+<!-- POS -->
+<div class="box">
+<h3>💳 POS Service</h3>
+<p>Transfer • Withdraw</p>
+
+<button onclick="callNow()">Call Now</button>
+</div>
+
+<!-- FILMS -->
+<div class="box">
+<h3>🎬 Download Films</h3>
+<p>Indian & Hausa Films</p>
+
+<button onclick="downloadFilm()">Download</button>
+</div>
+
+<!-- CONTACT -->
+<div class="box">
+<h3>📞 Contact</h3>
+<p>07086506334<br>09060996976</p>
+</div>
+
+</div>
+
+<script>
+
+function callNow(){
+    window.location.href="tel:07086506334";
+}
+
+function orderData(){
+    window.location.href="https://wa.me/2347086506334?text=Ina%20so%20in%20sayi%20data";
+}
+
+function downloadFilm(){
+    window.location.href="https://wa.me/2347086506334?text=Ina%20so%20in%20download%20film";
+}
+
+</script>
+
+</body>
+</html>
