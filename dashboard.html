@@ -2,24 +2,19 @@ HTML
 <!DOCTYPE html>
 <html>
 <head>
-<title>YDGL SMART SERVICES</title>
+<title>YDGL Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
-  margin:0;
   font-family:Arial;
-  background:linear-gradient(#0f2027,#2c5364);
+  background:#0f2027;
   color:white;
-}
-
-header{
-  text-align:center;
-  padding:20px;
+  margin:0;
 }
 
 .container{
-  padding:15px;
+  padding:20px;
 }
 
 .card{
@@ -28,99 +23,81 @@ header{
   padding:15px;
   margin:10px 0;
   border-radius:10px;
-  text-align:center;
-}
-
-input, select{
-  width:90%;
-  padding:10px;
-  margin:5px;
 }
 
 button{
-  width:90%;
-  padding:12px;
   background:#28a745;
   color:white;
   border:none;
+  padding:10px;
+  width:100%;
   border-radius:8px;
 }
 
-.opay{
-  background:#111;
-  padding:15px;
-  text-align:center;
+input{
+  width:100%;
+  padding:10px;
+  margin:5px 0;
 }
+
 </style>
 </head>
 
 <body>
 
-<header>
-<h2>YDGL SMART SERVICES</h2>
-<p>Fast • Secure • Reliable</p>
-</header>
-
-<div class="opay">
-<h3>💰 OPay Payment</h3>
-<p>Account: <b>9060996976</b></p>
-<p>Name: YDGL SERVICES</p>
-</div>
-
 <div class="container">
 
+<h2>👤 User Dashboard</h2>
+
 <div class="card">
-
-<h3>📦 Place Order</h3>
-
-<input type="text" id="name" placeholder="Your Name">
-<input type="text" id="phone" placeholder="Phone Number">
-
-<select id="service">
-<option value="300">1GB Data - ₦300</option>
-<option value="600">2GB Data - ₦600</option>
-<option value="200">Movies - ₦200</option>
-<option value="100">POS - ₦100</option>
-</select>
-
-<button onclick="order()">Order Now</button>
-
+  <input type="text" id="name" placeholder="Your Name">
+  <button onclick="saveUser()">Login</button>
 </div>
 
 <div class="card">
-<h3>📞 Contact</h3>
-<p>07086506334</p>
-<p>09060996976 (WhatsApp)</p>
+  <h3>📦 Make Order</h3>
+  <button onclick="order('Data')">Buy Data</button>
+  <button onclick="order('POS')">POS Service</button>
+  <button onclick="order('Film')">Download Film</button>
+</div>
 
-<button onclick="chat()">Chat on WhatsApp</button>
+<div class="card">
+  <h3>📋 Your Orders</h3>
+  <ul id="orders"></ul>
 </div>
 
 </div>
 
 <script>
-
-function order(){
-
-let name = document.getElementById("name").value;
-let phone = document.getElementById("phone").value;
-let amount = document.getElementById("service").value;
-
-if(!name || !phone){
-alert("Fill all details");
-return;
+function saveUser(){
+  let name = document.getElementById("name").value;
+  localStorage.setItem("user", name);
+  alert("Welcome " + name);
 }
 
-let msg = `NEW ORDER:%0AName:${name}%0APhone:${phone}%0AAmount:₦${amount}%0AStatus: I will pay via OPay`;
+function order(type){
+  let user = localStorage.getItem("user") || "Guest";
+  let orders = JSON.parse(localStorage.getItem("orders") || "[]");
 
-window.open(`https://wa.me/2349060996976?text=${msg}`);
+  orders.push(user + " ordered " + type);
+  localStorage.setItem("orders", JSON.stringify(orders));
 
-alert("Send payment to OPay: 9060996976 and send proof on WhatsApp.");
+  loadOrders();
 }
 
-function chat(){
-window.location.href="https://wa.me/2349060996976";
+function loadOrders(){
+  let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  let list = document.getElementById("orders");
+  list.innerHTML = "";
+
+  orders.forEach(o=>{
+    let li = document.createElement("li");
+    li.innerText = o;
+    list.appendChild(li);
+  });
 }
 
+loadOrders();
 </script>
 
 </body>
