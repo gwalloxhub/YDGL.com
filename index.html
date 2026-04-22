@@ -1,11 +1,9 @@
-HTML
+ HTML
 <!DOCTYPE html>
 <html>
 <head>
-<title>YDGL ULTRA SYSTEM</title>
+<title>YDGL SMART SERVICES</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script src="https://js.paystack.co/v1/inline.js"></script>
 
 <style>
 body{
@@ -30,16 +28,17 @@ header{
   padding:15px;
   margin:10px 0;
   border-radius:10px;
+  text-align:center;
 }
 
 input, select{
-  width:100%;
+  width:90%;
   padding:10px;
-  margin:5px 0;
+  margin:5px;
 }
 
 button{
-  width:100%;
+  width:90%;
   padding:12px;
   background:#28a745;
   color:white;
@@ -47,7 +46,7 @@ button{
   border-radius:8px;
 }
 
-.stats{
+.opay{
   background:#111;
   padding:15px;
   text-align:center;
@@ -59,17 +58,19 @@ button{
 
 <header>
 <h2>YDGL SMART SERVICES</h2>
-<p>ULTRA PAYMENT SYSTEM</p>
+<p>Fast • Secure • Reliable</p>
 </header>
 
-<div class="stats">
-<h3>Total Earnings: ₦<span id="total">0</span></h3>
-<h4>Orders: <span id="count">0</span></h4>
+<div class="opay">
+<h3>💰 OPay Payment</h3>
+<p>Account: <b>9060996976</b></p>
+<p>Name: YDGL SERVICES</p>
 </div>
 
 <div class="container">
 
 <div class="card">
+
 <h3>📦 Place Order</h3>
 
 <input type="text" id="name" placeholder="Your Name">
@@ -82,35 +83,23 @@ button{
 <option value="100">POS - ₦100</option>
 </select>
 
-<button onclick="pay()">Pay Now</button>
+<button onclick="order()">Order Now</button>
+
 </div>
 
 <div class="card">
-<h3>📋 Orders</h3>
-<div id="orders"></div>
+<h3>📞 Contact</h3>
+<p>07086506334</p>
+<p>09060996976 (WhatsApp)</p>
+
+<button onclick="chat()">Chat on WhatsApp</button>
 </div>
 
 </div>
 
 <script>
 
-function loadStats(){
-let orders = JSON.parse(localStorage.getItem("orders")||"[]");
-
-let total = 0;
-orders.forEach(o=> total += o.amount);
-
-document.getElementById("total").innerText = total;
-document.getElementById("count").innerText = orders.length;
-
-let html="";
-orders.forEach(o=>{
-html += `<p>${o.name} - ₦${o.amount}</p>`;
-});
-document.getElementById("orders").innerHTML = html;
-}
-
-function pay(){
+function order(){
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
@@ -121,41 +110,16 @@ alert("Fill all details");
 return;
 }
 
-var handler = PaystackPop.setup({
-key: 'YOUR_PUBLIC_KEY_HERE',
-email: 'customer@email.com',
-amount: amount * 100,
-currency: "NGN",
+let msg = `NEW ORDER:%0AName:${name}%0APhone:${phone}%0AAmount:₦${amount}%0AStatus: I will pay via OPay`;
 
-callback: function(response){
-
-let order = {
-name:name,
-phone:phone,
-amount:parseInt(amount)
-};
-
-let orders = JSON.parse(localStorage.getItem("orders")||"[]");
-orders.push(order);
-localStorage.setItem("orders", JSON.stringify(orders));
-
-let msg = `NEW PAYMENT:%0AName:${name}%0APhone:${phone}%0AAmount:₦${amount}`;
 window.open(`https://wa.me/2349060996976?text=${msg}`);
 
-alert("Payment Successful!");
-
-loadStats();
-},
-
-onClose: function(){
-alert("Payment cancelled");
-}
-});
-
-handler.openIframe();
+alert("Send payment to OPay: 9060996976 and send proof on WhatsApp.");
 }
 
-loadStats();
+function chat(){
+window.location.href="https://wa.me/2349060996976";
+}
 
 </script>
 
