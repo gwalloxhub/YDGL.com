@@ -6,153 +6,146 @@ HTML
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
-  margin:0;
-  font-family:Arial;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:white;
-  text-align:center;
+margin:0;
+font-family:Arial;
+background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+color:white;
+text-align:center;
 }
 
-/* HEADER */
-header{
-  padding:20px;
+.header{
+padding:30px;
 }
 
 .logo{
-  width:100px;
-  border-radius:50%;
+width:120px;
+border-radius:50%;
 }
 
-/* BALANCE */
-.balance{
-  background:rgba(0,0,0,0.5);
-  margin:15px;
-  padding:15px;
-  border-radius:12px;
-}
-
-/* CARD */
 .card{
-  background:rgba(255,255,255,0.9);
-  color:black;
-  padding:15px;
-  margin:15px;
-  border-radius:12px;
+background:white;
+color:black;
+margin:20px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* INPUT */
 input, select{
-  width:90%;
-  padding:10px;
-  margin:5px;
+width:90%;
+padding:12px;
+margin:10px;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
-/* BUTTON */
 button{
-  width:90%;
-  padding:12px;
-  background:#28a745;
-  color:white;
-  border:none;
-  border-radius:8px;
+background:#28a745;
+color:white;
+border:none;
+padding:15px;
+width:90%;
+border-radius:10px;
+font-size:16px;
 }
 
-/* HISTORY */
-.history{
-  text-align:left;
-  max-height:150px;
-  overflow:auto;
-  background:#111;
-  padding:10px;
-  border-radius:10px;
+button:hover{
+background:#218838;
 }
-
 </style>
+
 </head>
 
 <body>
 
-<header>
+<div class="header">
 <img src="logo.jpg" class="logo">
-<h2>YDGL SMART SERVICES</h2>
-</header>
-
-<div class="balance">
-<h3>💰 Wallet Balance</h3>
-<h2 id="bal">₦5000</h2>
-<button onclick="addMoney()">Add ₦1000</button>
+<h1>YDGL SMART SERVICES</h1>
+<p>Fast • Secure • Reliable</p>
 </div>
 
+<!-- PAYMENT -->
 <div class="card">
+<h2>💰 OPay Payment</h2>
+<p><b>Account:</b> 9060996976</p>
+<p><b>Name:</b> YDGL SERVICES</p>
+<p>⚠️ Make payment before placing order</p>
+</div>
 
-<h3>📦 Place Order</h3>
+<!-- BUY DATA -->
+<div class="card">
+<h2>📶 Buy Data</h2>
 
 <input type="text" id="name" placeholder="Your Name">
-<input type="text" id="phone" placeholder="Phone Number">
+<input type="text" id="phone" placeholder="Your Phone">
 
-<select id="service">
-<option value="300">1GB Data - ₦300</option>
-<option value="600">2GB Data - ₦600</option>
-<option value="200">Movies - ₦200</option>
-<option value="100">POS - ₦100</option>
+<select id="network">
+<option>MTN</option>
+<option>Airtel</option>
+<option>Glo</option>
+<option>9mobile</option>
 </select>
 
-<button onclick="buy()">Buy Now</button>
+<input type="text" id="receiver" placeholder="Number to receive data">
 
+<select id="plan">
+<option>1GB - ₦300</option>
+<option>2GB - ₦600</option>
+<option>5GB - ₦1500</option>
+</select>
+
+<button onclick="order()">Buy Now</button>
 </div>
 
+<!-- POS -->
 <div class="card">
-<h3>📜 Order History</h3>
-<div class="history" id="history"></div>
+<h2>💳 POS Service</h2>
+<p>Withdraw • Transfer • Deposit Available</p>
+</div>
+
+<!-- DOWNLOAD -->
+<div class="card">
+<h2>🎬 Download Films</h2>
+<p>Indian • Hausa • Latest Movies</p>
+</div>
+
+<!-- CONTACT -->
+<div class="card">
+<h2>📞 Contact</h2>
+<p>07086506334</p>
+<p>09060996976 (WhatsApp)</p>
+
+<a href="https://wa.me/2349060996976">
+<button>Chat on WhatsApp</button>
+</a>
 </div>
 
 <script>
-
-let balance = localStorage.getItem("bal") || 5000;
-let history = localStorage.getItem("his") || "";
-
-document.getElementById("bal").innerText = "₦" + balance;
-document.getElementById("history").innerHTML = history;
-
-function addMoney(){
-balance = parseInt(balance) + 1000;
-localStorage.setItem("bal", balance);
-document.getElementById("bal").innerText = "₦" + balance;
-alert("Balance updated!");
-}
-
-function buy(){
+function order(){
 
 let name = document.getElementById("name").value;
 let phone = document.getElementById("phone").value;
-let amount = document.getElementById("service").value;
+let network = document.getElementById("network").value;
+let receiver = document.getElementById("receiver").value;
+let plan = document.getElementById("plan").value;
 
-if(!name || !phone){
-alert("Fill details");
+if(name=="" || phone=="" || receiver==""){
+alert("Please fill all details");
 return;
 }
 
-if(balance < amount){
-alert("Not enough balance");
-return;
-}
+let message = "NEW ORDER:%0A"
++ "Name: " + name + "%0A"
++ "Phone: " + phone + "%0A"
++ "Network: " + network + "%0A"
++ "Receiver: " + receiver + "%0A"
++ "Plan: " + plan + "%0A"
++ "Payment: OPay Done";
 
-balance -= amount;
-localStorage.setItem("bal", balance);
-document.getElementById("bal").innerText = "₦" + balance;
-
-let record = `<p>✔ ${name} bought ₦${amount}</p>`;
-history += record;
-
-localStorage.setItem("his", history);
-document.getElementById("history").innerHTML = history;
-
-alert("Order Successful!");
+window.open("https://wa.me/2349060996976?text=" + message);
 
 }
-
 </script>
 
 </body>
